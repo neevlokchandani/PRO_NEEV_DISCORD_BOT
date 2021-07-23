@@ -1,18 +1,36 @@
 const Discord = require('discord.js')
+const fs = require('fs')
 const client = new Discord.Client()
+
 
 const config = require('./config.json')
 const command = require('./command')
 const sendMessage = require('./send-message')
 
-client.on('ready', () => {
-    console.log('The client is ready!')
+let date_ob = new Date();
+const timm =date_ob
 
+client.on('ready', () => {
     const guild = client.guilds.cache.get('865580387421913118')
     const channel = guild.channels.cache.get('865964283410120726')
-  
+    console.log(`${client.user.tag} is Online`)
     sendMessage(channel, 'hello world', 10)
+    client.on('message', async (message) => {
+        let ar2 = {[`>${message.author.tag}  ${timm.getHours()}:${timm.getMinutes()}:${timm.getSeconds()}  ${timm.getDate()}/${[timm.getMonth()+1]}/${timm.getTime()}`] : `${message.content}`}
+        let ar1 = require(`./test.json`);
 
+        ar1.push(ar2)
+            fs.writeFile("test.json", JSON.stringify(ar1,null,4), err => {
+                if (err) throw err; 
+            });
+            console.log(`> ${message.author.tag}  ${timm.getHours()}:${timm.getMinutes()}:${timm.getSeconds()}  ${timm.getDate()}/${[timm.getMonth()+1]}/${timm.getFullYear()-2000} :- ${message.content}`)
+    })    
+    command(client, 'cc', (message) => {
+        fs.writeFile("test.json", JSON.stringify([]), err => {
+            if (err) throw err; 
+            console.log("%c> clear_test.json","color:red")
+        });
+    })
     command(client, ['ping', 'test'], (message) => {
         message.channel.send('Pong!')
     })

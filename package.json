@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "s": "node index.js",
+    "infinet-run":"nodemon --ignore test.json  index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.5.3"
+    "discord.js": "^12.5.3",
+    "json-beautify": "^1.1.1",
+    "json-format": "^1.0.1"
   }
 }
